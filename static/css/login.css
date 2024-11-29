@@ -1,0 +1,30 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.main{
+    display: flex;
+    align-items: center;
+    height: 1000px;
+}
+.titulo{
+    flex: 1;
+    text-align: center;
+}
+.form{
+    flex: 1;
+    display: inline-block;
+    text-align: center;
+}
+.form .correo {
+    padding: 15px;
+}
+.form .clave {
+    padding: 15px;
+}
+.form .boton-login {
+    padding: 15px;
+}
+.form .registro {
+    padding: 15px;
+}
