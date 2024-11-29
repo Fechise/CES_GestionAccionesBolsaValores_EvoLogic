@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Tracker</title>
+</head>
+<body>
+    <header>
+        <h1>Bienvenido, {{ username }}</h1>
+        <a href="/logout">Cerrar Sesión</a>
+    </header>
+
+    <main>
+        <!-- Sección para registrar compras -->
+        <h2>Registrar Compra</h2>
+        <form action="/comprar" method="POST">
+            <label for="empresa">Símbolo:</label>
+            <input type="text" id="empresa" name="empresa" placeholder="Ejemplo: AAPL" required>
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" id="cantidad" name="cantidad" min="1" required>
+            <button type="submit">Registrar</button>
+        </form>
+
+        <!-- Sección para mostrar compras -->
+        <h2>Acciones Compradas</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Símbolo</th>
+                    <th>Cantidad</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for compra in compras %}
+                <tr>
+                    <td>{{ compra.empresa }}</td>
+                    <td>{{ compra.cantidad_acciones }}</td>
+                    <td>{{ compra.fecha_compra.strftime('%Y-%m-%d') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/compras">Ver detalles</a>
+
+        <!-- Nueva sección para consultar valores de acciones -->
+        <h2>Consultar Valores de Acciones</h2>
+        <form id="stock-lookup-form">
+            <label for="symbol">Símbolo:</label>
+            <input type="text" id="symbol" name="symbol" placeholder="Ejemplo: TSLA" required>
+            <button type="submit">Consultar</button>
+        </form>
+
+        <!-- Espacio para mostrar los resultados de la consulta -->
+        <div id="stock-data">
+            <h3>Resultados de la Consulta:</h3>
+            <ul id="results"></ul>
+        </div>
+    </main>
+
+    <script>
+        // Manejar la consulta de valores de acciones
+        document.getElementById('stock-lookup-form').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const symbol = document.getElementById('symbol').value;
+            const resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = ''; // Limpiar resultados anteriores
+
+            try {
+                const response = await fetch(`/api/daily-stock-data?symbol=${symbol}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    data.forEach(entry => {
+                        const li = document.createElement('li');
+                        li.textContent = `Fecha: ${entry.date}, Apertura: ${entry.open}, Máximo: ${entry.high}, Mínimo: ${entry.low}, Cierre: ${entry.close}, Volumen: ${entry.volume}`;
+                        resultsContainer.appendChild(li);
+                    });
+                } else {
+                    resultsContainer.innerHTML = `<li>Error: ${data.error}</li>`;
+                }
+            } catch (error) {
+                resultsContainer.innerHTML = `<li>Error: No se pudo realizar la consulta. Intenta nuevamente.</li>`;
+            }
+        });
+    </script>
+</body>
+</html>

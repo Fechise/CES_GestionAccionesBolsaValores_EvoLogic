@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Compras y Detalles</title>
+</head>
+<body>
+    <header>
+        <h1>Acciones Compradas</h1>
+        <a href="/">Regresar</a>
+    </header>
+    <main>
+        <!-- Tabla de Acciones Registradas -->
+        <h2>Lista de Acciones Compradas</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Símbolo</th>
+                    <th>Cantidad</th>
+                    <th>Fecha de Compra</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for compra in compras %}
+                <tr>
+                    <td>{{ compra.empresa }}</td>
+                    <td>{{ compra.cantidad_acciones }}</td>
+                    <td>{{ compra.fecha_compra.strftime('%Y-%m-%d') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Detalles de las Acciones -->
+        <h2>Detalles de las Acciones</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Símbolo</th>
+                    <th>Cantidad</th>
+                    <th>Precio Actual</th>
+                    <th>Porcentaje de Ganancia/Pérdida</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for detalle in detalles %}
+                <tr>
+                    <td>{{ detalle.empresa }}</td>
+                    <td>{{ detalle.cantidad_acciones }}</td>
+                    <td>${{ detalle.precio_actual }}</td>
+                    <td>{{ detalle.porcentaje_ganancia }}%</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>
