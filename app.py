@@ -130,6 +130,7 @@ def mostrar_compras():
             "empresa": compra["empresa"],
             "cantidad_acciones": compra["cantidad_acciones"],
             "precio_actual": precio_actual,
+            "precio_compra": precio_compra,
             "porcentaje_ganancia": round(porcentaje_ganancia, 2)
         })
 

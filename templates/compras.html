@@ -3,20 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Compras y Detalles</title>
+    <link rel="stylesheet" href="../static/css/compras.css">
 </head>
 <body>
-    <header>
+    <header class="header">
         <h1>Acciones Compradas</h1>
         <a href="/">Regresar</a>
     </header>
-    <main>
-        <!-- Tabla de Acciones Registradas -->
+    <main class="main">
+        <div class="acciones-registradas">
+            <!-- Tabla de Acciones Registradas -->
         <h2>Lista de Acciones Compradas</h2>
         <table>
             <thead>
                 <tr>
                     <th>Símbolo</th>
                     <th>Cantidad</th>
+                    <th>Precio de Compra</th>
                     <th>Fecha de Compra</th>
                 </tr>
             </thead>
@@ -25,13 +28,15 @@
                 <tr>
                     <td>{{ compra.empresa }}</td>
                     <td>{{ compra.cantidad_acciones }}</td>
+                    <td>{{ compra.precio_compra }}</td>
                     <td>{{ compra.fecha_compra.strftime('%Y-%m-%d') }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
-
-        <!-- Detalles de las Acciones -->
+        </div>
+        <div class="acciones-registradas">
+            <!-- Detalles de las Acciones -->
         <h2>Detalles de las Acciones</h2>
         <table>
             <thead>
@@ -39,6 +44,7 @@
                     <th>Símbolo</th>
                     <th>Cantidad</th>
                     <th>Precio Actual</th>
+                    <th>Precio de Compra</th>
                     <th>Porcentaje de Ganancia/Pérdida</th>
                 </tr>
             </thead>
@@ -48,11 +54,13 @@
                     <td>{{ detalle.empresa }}</td>
                     <td>{{ detalle.cantidad_acciones }}</td>
                     <td>${{ detalle.precio_actual }}</td>
+                    <td>${{ detalle.precio_compra }}</td>
                     <td>{{ detalle.porcentaje_ganancia }}%</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+        </div>
     </main>
 </body>
 </html>

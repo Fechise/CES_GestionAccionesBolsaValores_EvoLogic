@@ -1,65 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stock Tracker</title>
+    <link rel="stylesheet" href="../static/css/index.css">
 </head>
+
 <body>
-    <header>
-        <h1>Bienvenido, {{ username }}</h1>
-        <a href="/logout">Cerrar Sesión</a>
+    <header class="header">
+        <div class="titulo">
+            <h1>Bienvenido, {{ user }}</h1>
+        </div>
+        <div class="cerrar-sesion">
+            <a href="/logout">Cerrar Sesión</a>
+        </div>
     </header>
-
-    <main>
+    <main class="main">
         <!-- Sección para registrar compras -->
-        <h2>Registrar Compra</h2>
-        <form action="/comprar" method="POST">
-            <label for="empresa">Símbolo:</label>
-            <input type="text" id="empresa" name="empresa" placeholder="Ejemplo: AAPL" required>
-            <label for="cantidad">Cantidad:</label>
-            <input type="number" id="cantidad" name="cantidad" min="1" required>
-            <button type="submit">Registrar</button>
-        </form>
+        <div class="registro-compra">
+            <h2>Registrar Compra</h2>
+            <form action="/comprar" method="POST">
+                <label for="empresa">Símbolo:</label>
+                <input type="text" id="empresa" name="empresa" placeholder="Ejemplo: AAPL" required>
+                <label for="cantidad">Cantidad:</label>
+                <input type="number" id="cantidad" name="cantidad" min="1" required>
+                <button type="submit" id="registro-compra-button">Registrar</button>
+            </form>
+        </div>
+        <div class="acciones-registradas">
+            <!-- Sección para mostrar compras -->
+            <h2>Acciones Compradas</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Símbolo</th>
+                        <th>Cantidad</th>
+                        <th>Precio de Compra</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for compra in compras %}
+                    <tr>
+                        <td>{{ compra.empresa }}</td>
+                        <td>{{ compra.cantidad_acciones }}</td>
+                        <td>{{ compra.precio_compra }}</td>
+                        <td>{{ compra.fecha_compra.strftime('%Y-%m-%d') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="/compras">Ver detalles</a>
+        </div>
+        <div class="consulta-acciones">
+            <!-- Nueva sección para consultar valores de acciones -->
+            <h2>Consultar Valores de Acciones</h2>
+            <form id="stock-lookup-form">
+                <label for="symbol">Símbolo:</label>
+                <input type="text" id="symbol" name="symbol" placeholder="Ejemplo: TSLA" required>
+                <button type="submit">Consultar</button>
+            </form>
 
-        <!-- Sección para mostrar compras -->
-        <h2>Acciones Compradas</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Símbolo</th>
-                    <th>Cantidad</th>
-                    <th>Fecha</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for compra in compras %}
-                <tr>
-                    <td>{{ compra.empresa }}</td>
-                    <td>{{ compra.cantidad_acciones }}</td>
-                    <td>{{ compra.fecha_compra.strftime('%Y-%m-%d') }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <a href="/compras">Ver detalles</a>
-
-        <!-- Nueva sección para consultar valores de acciones -->
-        <h2>Consultar Valores de Acciones</h2>
-        <form id="stock-lookup-form">
-            <label for="symbol">Símbolo:</label>
-            <input type="text" id="symbol" name="symbol" placeholder="Ejemplo: TSLA" required>
-            <button type="submit">Consultar</button>
-        </form>
-
-        <!-- Espacio para mostrar los resultados de la consulta -->
-        <div id="stock-data">
-            <h3>Resultados de la Consulta:</h3>
-            <ul id="results"></ul>
+            <!-- Espacio para mostrar los resultados de la consulta -->
+            <div id="stock-data">
+                <h3>Resultados de la Consulta:</h3>
+                <ul id="results"></ul>
+            </div>
+        </div>
+        <div id="popup" class="popup">
+            <div class="popup-content">
+                <p>¡Acción registrada con éxito!</p>
+                <button id="btnOk">OK</button>
+            </div>
         </div>
     </main>
+    <footer>
 
+    </footer>
     <script>
+        function mostrarPopup() {
+            const popup = document.getElementById("popup");
+            popup.style.display = "flex";
+        }
+
+        function ocultarPopup() {
+            const popup = document.getElementById("popup");
+            popup.style.display = "none";
+        }
+
+        var boton_registro = document.getElementById('registro-compra-button');
+
+        var boton_ok_popup = document.getElementById('btnOk');
+
+        boton_registro.onclick = mostrarPopup;
+
+        boton_ok_popup.onclick = ocultarPopup;
+
         // Manejar la consulta de valores de acciones
         document.getElementById('stock-lookup-form').addEventListener('submit', async function (event) {
             event.preventDefault();
@@ -85,6 +123,8 @@
                 resultsContainer.innerHTML = `<li>Error: No se pudo realizar la consulta. Intenta nuevamente.</li>`;
             }
         });
+
     </script>
 </body>
+
 </html>
