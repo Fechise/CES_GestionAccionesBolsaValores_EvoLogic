@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 .header {
     display: flex;
     align-items: center;
@@ -11,15 +12,19 @@
     height: 100px;
     flex-direction: column;
 }
+
 .header .titulo {
     margin: 10px 0px;
 }
+
 .header .cerrar-sesion {
     color: black;
 }
+
 .header .cerrar-sesion a {
     text-decoration: none;
 }
+
 .main {
     display: flex;
     align-items: center;
@@ -29,6 +34,7 @@
     align-content: center;
     flex-direction: column;
 }
+
 .main .registro-compra {
     display: inline-block;
     text-align: center;
@@ -40,9 +46,11 @@
     font-family: 'Courier New', Courier, monospace;
     background-color: aliceblue;
 }
+
 .main .registro-compra form {
     padding: 20px;
 }
+
 .main .registro-compra form input {
     border-radius: 15px;
     border: 0px;
@@ -50,8 +58,9 @@
     height: 30px;
     margin-top: 10px;
 }
+
 .main .registro-compra form button {
-    background-color: #338aff ;
+    background-color: #338aff;
     border-radius: 15px;
     width: 150px;
     height: 30px;
@@ -61,9 +70,12 @@
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s ease-in-out;
 }
+
 .main .registro-compra form button:hover {
     background-color: #0056b3;
+    cursor: pointer;
 }
+
 .main .acciones-registradas {
     display: inline-block;
     text-align: center;
@@ -75,6 +87,7 @@
     font-family: 'Courier New', Courier, monospace;
     background-color: aliceblue;
 }
+
 .acciones-registradas h2 {
     font-family: 'Courier New', Courier, monospace;
     color: #333;
@@ -135,6 +148,7 @@
 
 .acciones-registradas a:hover {
     background-color: #0056b3;
+    cursor: pointer;
 }
 
 .main .consulta-acciones {
@@ -146,11 +160,13 @@
     padding: 10px;
     box-shadow: 10px 10px 10px gray;
     font-family: 'Courier New', Courier, monospace;
-    background-color: aliceblue;  
+    background-color: aliceblue;
 }
+
 .main .consulta-acciones form {
     padding: 20px;
 }
+
 .main .consulta-acciones form input {
     border-radius: 15px;
     border: 0px;
@@ -158,8 +174,9 @@
     height: 30px;
     margin-top: 10px;
 }
+
 .main .consulta-acciones form button {
-    background-color: #338aff ;
+    background-color: #338aff;
     width: 150px;
     height: 30px;
     margin-bottom: 10px;
@@ -170,10 +187,13 @@
     transition: background-color 0.3s ease-in-out;
 
 }
+
 .main .consulta-acciones form button:hover {
     background-color: #0056b3;
+    cursor: pointer;
 }
-#results{
+
+#results {
     list-style-type: none;
     margin: 10px 0px;
 }
@@ -188,53 +208,82 @@
     display: none;
     justify-content: center;
     align-items: center;
-  }
-  
-  .popup-content {
+}
+
+.popup-content {
     background: white;
     padding: 20px;
     border-radius: 8px;
     text-align: center;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  .popup button {
+}
+
+.popup button {
     margin: 5px;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-  }
-  
-  button#btnOk {
+}
+
+button#btnOk {
     background-color: #4CAF50;
     color: white;
-  }
+}
 
- .catalogo-acciones {
-    margin-top: 20px;
+.main .catalogo-acciones {
+    display: inline-block;
+    text-align: center;
+    border: 1px solid black;
+    margin: 10px 0px;
+    border-radius: 15px;
     padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #f9f9f9;
+    box-shadow: 10px 10px 10px gray;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: aliceblue;
 }
 
 .catalogo-acciones h2 {
-    margin-bottom: 10px;
+    font-family: 'Courier New', Courier, monospace;
+    color: #333;
+    margin-bottom: 15px;
 }
 
 .catalogo-acciones table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 10px;
+    margin: 15px 0;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
-.catalogo-acciones th, .catalogo-acciones td {
-    border: 1px solid #ddd;
-    padding: 8px;
+.catalogo-acciones table thead {
+    background-color: #338aff;
+    color: white;
+}
+
+.catalogo-acciones table thead th {
+    padding: 10px;
     text-align: center;
+    border-bottom: 2px solid #ddd;
 }
 
-.catalogo-acciones th {
-    background-color: #f4f4f4;
+#load-stocks {
+    background-color: #338aff;
+    width: 150px;
+    height: 30px;
+    margin-bottom: 10px;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    border-radius: 15px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease-in-out;
+}
+
+#load-stocks:hover {
+    background-color: #0056b3;
+    cursor: pointer;
 }
