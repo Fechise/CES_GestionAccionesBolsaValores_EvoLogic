@@ -19,9 +19,13 @@
 }
 
 .titulo h1 {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Mantra Rimba';
+    color: #1D7874;
+    text-shadow: -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    2px 2px 0 #000;
     font-size: 80px;
-    color: black;
 }
 
 .form {
@@ -36,28 +40,43 @@
 }
 
 .form .correo {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 18px;
     padding: 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-bottom: 0px;
 }
+
 .form .correo input {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 18px;
     border-radius: 15px;
     border: 0px;
     width: 250px;
     height: 30px;
     margin-top: 10px;
+    padding-left: 10px;
 }
 
 .form .clave {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 18px;
     padding: 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-bottom: 0px;
 }
+
 .form .clave input {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 18px;
     border-radius: 15px;
     border: 0px;
     width: 250px;
@@ -69,13 +88,20 @@
     padding: 15px;
     padding-bottom: 0px;
 }
+
 .form .boton-login button {
-    background-color: #338aff ;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 18px;
+    background-color: #1D7874;
     border-radius: 15px;
-    width: 150px;
+    width: 200px;
     height: 30px;
 }
 
 .form .registro {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 18px;
     padding: 15px;
 }
