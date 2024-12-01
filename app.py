@@ -140,7 +140,7 @@ def mostrar_compras():
 # Ruta para obtener el catálogo de acciones usando Finnhub
 @app.route("/api/stocks", methods=["GET"])
 def obtener_stocks():
-    exchange = request.args.get("exchange", "US")  # Default to "US" if not provided
+    exchange = request.args.get("exchange", "US")
     url = f'https://finnhub.io/api/v1/stock/symbol?exchange={exchange}&token={FINNHUB_API_KEY}'
     try:
         response = requests.get(url)

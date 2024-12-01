@@ -148,18 +148,17 @@
 
         // Manejar la carga de catálogo de acciones
         document.getElementById('load-stocks').addEventListener('click', async function () {
-        const catalogoBody = document.getElementById('catalogo-body');
-        const loadingIndicator = document.getElementById('loading-indicator');
-        catalogoBody.innerHTML = ''; // Clear any previous content
-        loadingIndicator.style.display = 'block'; // Show loading indicator
+        const CATALOGO_BODY = document.getElementById('catalogo-body');
+        const LOADING_INDICATOR = document.getElementById('loading-indicator');
+        CATALOGO_BODY.innerHTML = '';
+        LOADING_INDICATOR.style.display = 'block';
 
         try {
-            const response = await fetch('/api/stocks');
-            const stocks = await response.json();
+            const RESPONSE = await fetch('/api/stocks');
+            const STOCKS = await RESPONSE.json();
 
-            if (response.ok) {
-                stocks.forEach(stock => {
-                    // Filter rows where all values (except symbol and description) are empty
+            if (RESPONSE.ok) {
+                STOCKS.forEach(stock => {
                     if (
                         !stock.current_price &&
                         !stock.day_high &&
@@ -167,11 +166,11 @@
                         !stock.open_price &&
                         !stock.change
                     ) {
-                        return; // Do not add this stock
+                        return;
                     }
 
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
+                    const ROW = document.createElement('tr');
+                    ROW.innerHTML = `
                     <td>${stock.symbol}</td>
                     <td>${stock.description}</td>
                     <td>${stock.exchange || ''}</td>
@@ -181,18 +180,17 @@
                     <td>${stock.open_price || ''}</td>
                     <td>${stock.change !== undefined ? stock.change + '%' : '0%'}</td>
                 `;
-                    catalogoBody.appendChild(row);
+                    CATALOGO_BODY.appendChild(ROW);
                 });
             } else {
-                catalogoBody.innerHTML = `<tr><td colspan="8">Error loading catalog: ${stocks.error}</td></tr>`;
+                CATALOGO_BODY.innerHTML = `<tr><td colspan="8">Error loading catalog: ${STOCKS.error}</td></tr>`;
             }
         } catch (error) {
-            catalogoBody.innerHTML = `<tr><td colspan="8">Error: Could not fetch catalog. Please try again.</td></tr>`;
+            CATALOGO_BODY.innerHTML = `<tr><td colspan="8">Error: Could not fetch catalog. Please try again.</td></tr>`;
         } finally {
-            loadingIndicator.style.display = 'none'; // Hide loading indicator
+            LOADING_INDICATOR.style.display = 'none';
         }
     });
-
     </script>
 </body>
 
