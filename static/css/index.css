@@ -211,3 +211,30 @@
     color: white;
   }
 
+ .catalogo-acciones {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.catalogo-acciones h2 {
+    margin-bottom: 10px;
+}
+
+.catalogo-acciones table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.catalogo-acciones th, .catalogo-acciones td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.catalogo-acciones th {
+    background-color: #f4f4f4;
+}

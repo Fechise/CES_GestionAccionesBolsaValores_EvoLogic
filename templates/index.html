@@ -75,6 +75,28 @@
                 <button id="btnOk">OK</button>
             </div>
         </div>
+        <div class="catalogo-acciones">
+        <h2>Catálogo de Acciones</h2>
+        <button id="load-stocks">Cargar Catálogo</button>
+        <table>
+            <thead>
+            <tr>
+                <th>Símbolo</th>
+                <th>Descripción</th>
+                <th>Moneda</th>
+                <th>Precio Actual</th>
+                <th>Máximo</th>
+                <th>Mínimo</th>
+                <th>Apertura</th>
+                <th>Cambio (%)</th>
+            </tr>
+            </thead>
+            <tbody id="catalogo-body">
+            <!-- Los datos de las acciones se llenarán aquí dinámicamente -->
+            </tbody>
+        </table>
+    </div>
+    <div id="loading-indicator" style="display: none;">Loading...</div>
     </main>
     <footer>
 
@@ -123,6 +145,53 @@
                 resultsContainer.innerHTML = `<li>Error: No se pudo realizar la consulta. Intenta nuevamente.</li>`;
             }
         });
+
+        // Manejar la carga de catálogo de acciones
+        document.getElementById('load-stocks').addEventListener('click', async function () {
+        const catalogoBody = document.getElementById('catalogo-body');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        catalogoBody.innerHTML = ''; // Clear any previous content
+        loadingIndicator.style.display = 'block'; // Show loading indicator
+
+        try {
+            const response = await fetch('/api/stocks');
+            const stocks = await response.json();
+
+            if (response.ok) {
+                stocks.forEach(stock => {
+                    // Filter rows where all values (except symbol and description) are empty
+                    if (
+                        !stock.current_price &&
+                        !stock.day_high &&
+                        !stock.day_low &&
+                        !stock.open_price &&
+                        !stock.change
+                    ) {
+                        return; // Do not add this stock
+                    }
+
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                    <td>${stock.symbol}</td>
+                    <td>${stock.description}</td>
+                    <td>${stock.exchange || ''}</td>
+                    <td>${stock.current_price || ''}</td>
+                    <td>${stock.day_high || ''}</td>
+                    <td>${stock.day_low || ''}</td>
+                    <td>${stock.open_price || ''}</td>
+                    <td>${stock.change !== undefined ? stock.change + '%' : '0%'}</td>
+                `;
+                    catalogoBody.appendChild(row);
+                });
+            } else {
+                catalogoBody.innerHTML = `<tr><td colspan="8">Error loading catalog: ${stocks.error}</td></tr>`;
+            }
+        } catch (error) {
+            catalogoBody.innerHTML = `<tr><td colspan="8">Error: Could not fetch catalog. Please try again.</td></tr>`;
+        } finally {
+            loadingIndicator.style.display = 'none'; // Hide loading indicator
+        }
+    });
 
     </script>
 </body>

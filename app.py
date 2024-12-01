@@ -4,11 +4,12 @@ from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = "7C6UMRE9EL8UA0XL" 
+API_KEY = "7C6UMRE9EL8UA0XL"
+FINNHUB_API_KEY = 'ct4h7u9r01qo7vqammh0ct4h7u9r01qo7vqammhg'
 
 users = {}
 compras = []
 
-API_KEY = "7C6UMRE9EL8UA0XL"
 
 # Ruta para mostrar la página de inicio
 @app.route("/")
@@ -135,6 +136,49 @@ def mostrar_compras():
         })
 
     return render_template("compras.html", compras=compras, detalles=detalles)
+
+# Ruta para obtener el catálogo de acciones usando Finnhub
+@app.route("/api/stocks", methods=["GET"])
+def obtener_stocks():
+    exchange = request.args.get("exchange", "US")  # Default to "US" if not provided
+    url = f'https://finnhub.io/api/v1/stock/symbol?exchange={exchange}&token={FINNHUB_API_KEY}'
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        stocks = response.json()
+
+        data = []
+        count = 0
+
+        for stock in stocks:
+            if count >= 10:
+                break
+
+            symbol = stock["symbol"]
+
+            quote_url = f'https://finnhub.io/api/v1/quote?symbol={symbol}&token={FINNHUB_API_KEY}'
+            quote_response = requests.get(quote_url)
+            quote_data = quote_response.json()
+
+            stock_data = {
+                "symbol": stock["symbol"],
+                "description": stock["description"],
+                "exchange": exchange,
+                "current_price": quote_data.get("c"),
+                "day_high": quote_data.get("h"),
+                "day_low": quote_data.get("l"),
+                "open_price": quote_data.get("o"),
+                "change": quote_data.get("dp") if quote_data.get("dp") is not None else 0
+            }
+
+            if None not in stock_data.values():
+                data.append(stock_data)
+                count += 1
+
+        return jsonify(data)
+
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": str(e)}), 500
 
 # Ruta para logout
 @app.route("/logout")
