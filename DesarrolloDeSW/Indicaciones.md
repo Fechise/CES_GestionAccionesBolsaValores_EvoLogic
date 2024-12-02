@@ -2,6 +2,5 @@
 
 ## Puntos por tratar:
 - Documento de requisitos
+- Diagramas de robustez
 - Diagrama de clases
-- Diagrama de secuencia
-- Bosquejos

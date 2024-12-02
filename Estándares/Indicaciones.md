@@ -1,5 +1,6 @@
 # Estándares
 
 ## Puntos por tratar:
-- Formato de los documentos
-- Formato de las transacciones en GitHub
+- Formato del código
+- Formato de las ramas
+- Formato de los commits

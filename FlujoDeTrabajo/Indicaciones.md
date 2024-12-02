@@ -1,8 +1,9 @@
 # Flujo de Trabajo
 
 ## Puntos por tratar:
+- Estructura de ramas
 - Uso de ramas
-- Divisón de tareas
+- Integración de cambios
 - Revisiones
-- Formato de commits
 - Pull y push
+- Pruebas
