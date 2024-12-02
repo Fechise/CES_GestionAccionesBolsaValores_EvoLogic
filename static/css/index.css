@@ -6,7 +6,7 @@
 
 @font-face {
     font-family: 'Mantra Rimba';
-    src: url("../../fonts/Mantra Rimba.ttf");
+    src: url("../fonts/Mantra Rimba.ttf");
 }
 
 .header {
@@ -25,7 +25,7 @@
 }
 
 .header .titulo {
-    font-size: 20px;
+    font-size: 30px;
     font-family: 'Mantra Rimba';
     color: white;
     text-shadow: -2px -2px 0 #000,

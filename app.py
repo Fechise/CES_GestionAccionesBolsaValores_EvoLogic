@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for, session
+from flask import Flask, render_template, request, jsonify, redirect, url_for, session, send_from_directory
 import requests
 from datetime import datetime
 
@@ -191,6 +191,12 @@ def obtener_stocks():
 def logout():
     session.pop("user", None)
     return redirect(url_for("login"))
+
+# Ruta para servir archivos estáticos
+@app.route('/static/<path:filename>')
+def static_files(filename):
+    return send_from_directory('static', filename)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
