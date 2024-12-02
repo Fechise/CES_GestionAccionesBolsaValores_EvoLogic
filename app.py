@@ -14,7 +14,7 @@ API_KEY = "7C6UMRE9EL8UA0XL"
 @app.route("/")
 def index():
     if "user" in session:
-        return render_template("index.html", compras=compras, user=session["user"])
+        return render_template("index.html", compras=compras, user=session["user"], username=session["username"])
     return redirect(url_for("login"))
 
 # Ruta para la página de login
@@ -24,7 +24,9 @@ def login():
         email = request.form["email"]
         password = request.form["password"]
         if email in users and users[email]["password"] == password:
+            name = users[email]["name"]
             session["user"] = email
+            session["username"] = name
             return redirect(url_for("index"))
         return "Usuario o contraseña incorrecta", 401
     return render_template("login.html")
