@@ -1,0 +1,112 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.main {
+    display: flex;
+    align-items: center;
+    height: 1000px;
+    background: rgb(34, 193, 195);
+    background: radial-gradient(circle, rgba(34, 193, 195, 1) 0%, rgba(0, 179, 255, 1) 100%);
+    align-content: center;
+}
+
+.titulo {
+    flex: 1;
+    text-align: center;
+}
+
+@font-face {
+    font-family: 'Snorkad Regular';
+    src: url("../fonts/Snorkad-Regular.ttf");
+}
+
+.titulo h1 {
+    color: #ffffff;
+    font-family: "Snorkad Regular";
+    text-shadow: -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000,
+    2px 2px 0 #000;
+    font-size: 80px;
+}
+
+.form {
+    flex: 1;
+    display: inline-block;
+    text-align: center;
+    border: 2px solid black;
+    border-radius: 15px;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: aliceblue;
+    box-shadow: 10px 10px 10px gray;
+}
+
+.form .correo {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 0px;
+}
+
+.form .correo input {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 15px;
+    border: 0px;
+    width: 250px;
+    height: 30px;
+    margin-top: 10px;
+    padding-left: 10px;
+}
+
+.form .clave {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 0px;
+}
+
+.form .clave input {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 15px;
+    border: 0px;
+    width: 250px;
+    height: 30px;
+    margin-top: 10px;
+}
+
+.form .boton-login {
+    padding: 15px;
+    padding-bottom: 0px;
+}
+
+.form .boton-login button {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 18px;
+    background-color: #1D7874;
+    border-radius: 15px;
+    width: 200px;
+    height: 30px;
+}
+
+.form .registro {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 15px;
+}

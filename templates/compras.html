@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Compras y Detalles</title>
+    <link rel="stylesheet" href="../static/css/compras.css">
+</head>
+<body>
+<header class="header">
+    <img src="../static/img/LogoStockTracker_SF_SL.png" alt="">
+    <h1>Acciones Compradas</h1>
+    <a href="/">Regresar</a>
+</header>
+<main class="main">
+    <div class="acciones-registradas">
+        <!-- Tabla de Acciones Registradas -->
+        <h2>Lista de Acciones Compradas</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Símbolo</th>
+                <th>Cantidad</th>
+                <th>Precio de Compra</th>
+                <th>Valor de Compra</th>
+                <th>Fecha de Compra</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for compra in compras %}
+            <tr>
+                <td>{{ compra.empresa }}</td>
+                <td>{{ compra.cantidad_acciones }}</td>
+                <td>{{ compra.precio_compra }}</td>
+                <td>{{ compra.valor_compra }}</td>
+                <td>{{ compra.fecha_compra.strftime('%Y-%m-%d') }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="acciones-registradas">
+        <!-- Detalles de las Acciones -->
+        <h2>Detalles de las Acciones</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Símbolo</th>
+                <th>Cantidad</th>
+                <th>Precio Actual</th>
+                <th>Precio de Compra</th>
+                <th>Valor de Compra</th>
+                <th>Porcentaje de Ganancia/Pérdida</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for detalle in detalles %}
+            <tr>
+                <td>{{ detalle.empresa }}</td>
+                <td>{{ detalle.cantidad_acciones }}</td>
+                <td>${{ detalle.precio_actual }}</td>
+                <td>${{ detalle.precio_compra }}</td>
+                <td>${{ detalle.valor_compra }}</td>
+                <td>{{ detalle.porcentaje_ganancia }}%</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>
