@@ -6,4 +6,3 @@ Proyecto de Primer Bimestre de Construcción y Evolución de Software.
 - Flujo de trabajo
 - Estándares
 - Requisitos
-- Bosquejos
