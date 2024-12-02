@@ -18,8 +18,13 @@
     text-align: center;
 }
 
+@font-face {
+    font-family: 'Snorkad Regular';
+    src: url("../fonts/Snorkad-Regular.ttf");
+}
+
 .titulo h1 {
-    font-family: 'Mantra Rimba';
+    font-family: 'Snorkad Regular';
     color: white;
     text-shadow: -2px -2px 0 #000,
     2px -2px 0 #000,
