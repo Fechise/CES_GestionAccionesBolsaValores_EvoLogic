@@ -51,6 +51,7 @@ def comprar():
     empresa = request.form["empresa"].upper()
     cantidad = int(request.form["cantidad"])
     fecha_compra = datetime.now()
+    valor_compra = float(request.form["valor-compra"])
 
     # Obtener precio de compra usando la API
     url = f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={empresa}&interval=5min&apikey={API_KEY}"
@@ -67,7 +68,8 @@ def comprar():
         "empresa": empresa,
         "cantidad_acciones": cantidad,
         "fecha_compra": fecha_compra,
-        "precio_compra": precio_compra
+        "precio_compra": precio_compra,
+        "valor_compra": valor_compra
     })
     return redirect(url_for("index"))
 
@@ -124,13 +126,15 @@ def mostrar_compras():
 
         # Calcular porcentaje de ganancia/pérdida
         precio_compra = compra["precio_compra"]
-        porcentaje_ganancia = ((precio_actual - precio_compra) / precio_compra) * 100 if precio_compra > 0 else 0
+        valor_compra = compra["valor_compra"]
+        porcentaje_ganancia = ((precio_actual - valor_compra) / valor_compra) * 100 if valor_compra > 0 else 0
 
         detalles.append({
             "empresa": compra["empresa"],
             "cantidad_acciones": compra["cantidad_acciones"],
             "precio_actual": precio_actual,
             "precio_compra": precio_compra,
+            "valor_compra": valor_compra,
             "porcentaje_ganancia": round(porcentaje_ganancia, 2)
         })
 

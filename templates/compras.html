@@ -21,6 +21,7 @@
                 <th>Símbolo</th>
                 <th>Cantidad</th>
                 <th>Precio de Compra</th>
+                <th>Valor de Compra</th>
                 <th>Fecha de Compra</th>
             </tr>
             </thead>
@@ -30,6 +31,7 @@
                 <td>{{ compra.empresa }}</td>
                 <td>{{ compra.cantidad_acciones }}</td>
                 <td>{{ compra.precio_compra }}</td>
+                <td>{{ compra.valor_compra }}</td>
                 <td>{{ compra.fecha_compra.strftime('%Y-%m-%d') }}</td>
             </tr>
             {% endfor %}
@@ -46,6 +48,7 @@
                 <th>Cantidad</th>
                 <th>Precio Actual</th>
                 <th>Precio de Compra</th>
+                <th>Valor de Compra</th>
                 <th>Porcentaje de Ganancia/Pérdida</th>
             </tr>
             </thead>
@@ -56,6 +59,7 @@
                 <td>{{ detalle.cantidad_acciones }}</td>
                 <td>${{ detalle.precio_actual }}</td>
                 <td>${{ detalle.precio_compra }}</td>
+                <td>${{ detalle.valor_compra }}</td>
                 <td>{{ detalle.porcentaje_ganancia }}%</td>
             </tr>
             {% endfor %}

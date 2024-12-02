@@ -4,8 +4,8 @@ class ComprasController:
     def __init__(self):
         self.compras = []
 
-    def crear_compra(self, usuario, empresa, precio_compra, cantidad_acciones):
-        compra = Compra(empresa, precio_compra, cantidad_acciones)
+    def crear_compra(self, usuario, empresa, precio_compra, cantidad_acciones, valor_compra):
+        compra = Compra(empresa, precio_compra, cantidad_acciones, valor_compra)
         usuario.registrar_compra(compra)
         self.compras.append(compra)
 

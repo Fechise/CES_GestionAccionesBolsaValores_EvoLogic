@@ -27,6 +27,8 @@
             <input type="text" id="empresa" name="empresa" placeholder="Ejemplo: AAPL" required>
             <label for="cantidad">Cantidad:</label>
             <input type="number" id="cantidad" name="cantidad" min="1" required>
+            <label for="valor-compra">Valor de compra:</label>
+            <input type="number" id="valor-compra" name="valor-compra" min="1" required>
             <button type="submit" id="registro-compra-button">Registrar</button>
         </form>
     </div>
@@ -39,6 +41,7 @@
                 <th>Símbolo</th>
                 <th>Cantidad</th>
                 <th>Precio de Compra</th>
+                <th>Valor de Compra</th>
                 <th>Fecha</th>
             </tr>
             </thead>
@@ -48,6 +51,7 @@
                 <td>{{ compra.empresa }}</td>
                 <td>{{ compra.cantidad_acciones }}</td>
                 <td>{{ compra.precio_compra }}</td>
+                <td>{{ compra.valor_compra }}</td>
                 <td>{{ compra.fecha_compra.strftime('%Y-%m-%d') }}</td>
             </tr>
             {% endfor %}
