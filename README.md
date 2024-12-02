@@ -1,2 +1,5 @@
 # CES_GestionAccionesBolsaValores_EvoLogic
-Proyecto de Primer Bimestre de Construcción y Evolución de Software.
+Proyecto Primer Bimestre
+
+## Rama feature --> Catalogo-acciones
+Rama que contiene la adición de la funcionalidad que permite ver un catálogo de las acciones, en base a la HU-04.
