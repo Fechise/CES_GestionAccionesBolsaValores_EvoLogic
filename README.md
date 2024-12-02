@@ -1,2 +1,2 @@
-# CES_GestionAccionesBolsaValores_EvoLogic
-Proyecto de Primer Bimestre de Construcción y Evolución de Software.
+# Rama develop
+Rama que contiene el código en desarrollo, de aquí se derivan las ramas para feature.
