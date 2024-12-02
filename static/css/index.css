@@ -57,7 +57,7 @@
 .main {
     display: flex;
     align-items: center;
-    height: 1000px;
+    height: 100%;
     background: rgb(34, 193, 195);
     background: radial-gradient(circle, rgba(34, 193, 195, 1) 0%, rgba(0, 179, 255, 1) 100%);
     align-content: center;
