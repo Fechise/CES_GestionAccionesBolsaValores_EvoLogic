@@ -68,20 +68,42 @@
             <button type="submit">Consultar</button>
         </form>
 
-        <!-- Espacio para mostrar los resultados de la consulta -->
-        <div id="stock-data">
-            <h3>Resultados de la Consulta:</h3>
-            <ul id="results"></ul>
+            <!-- Espacio para mostrar los resultados de la consulta -->
+            <div id="stock-data">
+                <h3>Resultados de la Consulta:</h3>
+                <ul id="results"></ul>
+            </div>
         </div>
-    </div>
-    <div id="popup" class="popup">
-        <div class="popup-content">
-            <p>¡Acción registrada con éxito!</p>
-            <button id="btnOk">OK</button>
+        <div id="popup" class="popup">
+            <div class="popup-content">
+                <p>¡Acción registrada con éxito!</p>
+                <button id="btnOk">OK</button>
+            </div>
         </div>
+        <div class="catalogo-acciones">
+        <h2>Catálogo de Acciones</h2>
+        <button id="load-stocks">Cargar Catálogo</button>
+        <table>
+            <thead>
+            <tr>
+                <th>Símbolo</th>
+                <th>Descripción</th>
+                <th>Moneda</th>
+                <th>Precio Actual</th>
+                <th>Máximo</th>
+                <th>Mínimo</th>
+                <th>Apertura</th>
+                <th>Cambio (%)</th>
+            </tr>
+            </thead>
+            <tbody id="catalogo-body">
+            <!-- Los datos de las acciones se llenarán aquí dinámicamente -->
+            </tbody>
+        </table>
     </div>
-</main>
-<footer>
+    <div id="loading-indicator" style="display: none;">Loading...</div>
+    </main>
+    <footer>
 
 </footer>
 <script>
@@ -129,7 +151,52 @@
         }
     });
 
-</script>
+        // Manejar la carga de catálogo de acciones
+        document.getElementById('load-stocks').addEventListener('click', async function () {
+        const CATALOGO_BODY = document.getElementById('catalogo-body');
+        const LOADING_INDICATOR = document.getElementById('loading-indicator');
+        CATALOGO_BODY.innerHTML = '';
+        LOADING_INDICATOR.style.display = 'block';
+
+        try {
+            const RESPONSE = await fetch('/api/stocks');
+            const STOCKS = await RESPONSE.json();
+
+            if (RESPONSE.ok) {
+                STOCKS.forEach(stock => {
+                    if (
+                        !stock.current_price &&
+                        !stock.day_high &&
+                        !stock.day_low &&
+                        !stock.open_price &&
+                        !stock.change
+                    ) {
+                        return;
+                    }
+
+                    const ROW = document.createElement('tr');
+                    ROW.innerHTML = `
+                    <td>${stock.symbol}</td>
+                    <td>${stock.description}</td>
+                    <td>${stock.exchange || ''}</td>
+                    <td>${stock.current_price || ''}</td>
+                    <td>${stock.day_high || ''}</td>
+                    <td>${stock.day_low || ''}</td>
+                    <td>${stock.open_price || ''}</td>
+                    <td>${stock.change !== undefined ? stock.change + '%' : '0%'}</td>
+                `;
+                    CATALOGO_BODY.appendChild(ROW);
+                });
+            } else {
+                CATALOGO_BODY.innerHTML = `<tr><td colspan="8">Error loading catalog: ${STOCKS.error}</td></tr>`;
+            }
+        } catch (error) {
+            CATALOGO_BODY.innerHTML = `<tr><td colspan="8">Error: Could not fetch catalog. Please try again.</td></tr>`;
+        } finally {
+            LOADING_INDICATOR.style.display = 'none';
+        }
+    });
+    </script>
 </body>
 
 </html>
