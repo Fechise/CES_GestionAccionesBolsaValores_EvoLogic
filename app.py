@@ -10,12 +10,11 @@ FINNHUB_API_KEY = 'ct4h7u9r01qo7vqammh0ct4h7u9r01qo7vqammhg'
 users = {}
 compras = []
 
-
 # Ruta para mostrar la página de inicio
 @app.route("/")
 def index():
     if "user" in session:
-        return render_template("index.html", compras=compras, user=session["user"], username=session["username"])
+        return render_template("index.html", compras=compras, user=session["user"], username=session["name"])
     return redirect(url_for("login"))
 
 # Ruta para la página de login
@@ -25,9 +24,8 @@ def login():
         email = request.form["email"]
         password = request.form["password"]
         if email in users and users[email]["password"] == password:
-            name = users[email]["name"]
             session["user"] = email
-            session["username"] = name
+            session["name"] = users[email]["name"]
             return redirect(url_for("index"))
         return "Usuario o contraseña incorrecta", 401
     return render_template("login.html")
@@ -38,9 +36,12 @@ def register():
     if request.method == "POST":
         email = request.form["email"]
         password = request.form["password"]
+        password_confirm = request.form["password-confirm"]
         name = request.form["name"]
         if email in users:
             return "El usuario ya existe", 400
+        if password != password_confirm:
+            return "Las contraseñas no coinciden", 400
         users[email] = {"name": name, "password": password}
         return redirect(url_for("login"))
     return render_template("register.html")

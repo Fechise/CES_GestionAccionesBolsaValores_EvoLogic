@@ -4,135 +4,102 @@
     box-sizing: border-box;
 }
 
-.header {
-    height: 150px;
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+header {
     display: flex;
     align-items: center;
-    background-color: #1D7874;
-    position: relative;
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
+    justify-content: space-between;
+    background-color: #64d5d0;
+    padding: 15px 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.header img {
-    width: 200px;
-    height: 100px;
-    margin: 0px 30px;
+header .logo img {
+    width: 100px;
+    height: auto;
 }
 
-@font-face {
-    font-family: 'Snorkad Regular';
-    src: url("../fonts/Snorkad-Regular.ttf");
+header .titulo h1 {
+    font-size: 24px;
+    color: #fff;
+    font-family: 'Snorkad Regular', Arial, sans-serif;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-.header h1 {
-    font-size: 60px;
-    font-family: 'Snorkad Regular';
-    color: white;
-    text-shadow: -2px -2px 0 #000,
-    2px -2px 0 #000,
-    -2px 2px 0 #000,
-    2px 2px 0 #000;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.header a {
-    font-size: 30px;
-    color: white;
-    text-shadow: -2px -2px 0 #000,
-    2px -2px 0 #000,
-    -2px 2px 0 #000,
-    2px 2px 0 #000;
-    margin: 0px 10px;
-    position: absolute;
-    right: 10px;
+header .regresar a {
     text-decoration: none;
+    color: #fff;
+    background-color: #1D7874;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease-in-out;
 }
 
-.main {
-    display: flex;
-    align-items: center;
-    height: 1000px;
-    background: rgb(34, 193, 195);
-    background: radial-gradient(circle, rgba(34, 193, 195, 1) 0%, rgba(0, 179, 255, 1) 100%);
-    align-content: center;
-    flex-direction: column;
+header .regresar a:hover {
+    background-color: #145c59;
 }
 
-.main .acciones-registradas {
-    display: inline-block;
-    text-align: center;
-    border: 1px solid black;
-    margin: 10px 0px;
+main {
+    padding: 20px;
+    height: 100vh;
+}
+
+.acciones-registradas {
+    background-color: #fff;
     border-radius: 15px;
-    padding: 10px;
-    box-shadow: 10px 10px 10px gray;
-    font-family: 'Courier New', Courier, monospace;
-    background-color: aliceblue;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 900px;
 }
 
 .acciones-registradas h2 {
-    font-family: 'Courier New', Courier, monospace;
-    color: #333;
-    margin-bottom: 15px;
+    font-size: 22px;
+    color: #1D7874;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-.acciones-registradas table {
+table {
     width: 100%;
     border-collapse: collapse;
-    margin: 15px 0;
-    font-family: 'Courier New', Courier, monospace;
+    margin: 20px 0;
     background-color: #f9f9f9;
     border-radius: 10px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.acciones-registradas table thead {
+table thead {
     background-color: #1D7874;
-    color: white;
+    color: #fff;
 }
 
-.acciones-registradas table thead th {
+table th, table td {
     padding: 10px;
     text-align: center;
-    border-bottom: 2px solid #ddd;
 }
 
-.acciones-registradas table tbody tr {
-    text-align: center;
-}
-
-.acciones-registradas table tbody tr:nth-child(even) {
+table tbody tr:nth-child(even) {
     background-color: #e6f7ff;
 }
 
-.acciones-registradas table tbody tr:hover {
+table tbody tr:hover {
     background-color: #cceeff;
     transition: background-color 0.3s ease-in-out;
 }
 
-.acciones-registradas table tbody td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-}
-
-.acciones-registradas a {
-    display: inline-block;
-    margin-top: 15px;
-    text-decoration: none;
-    color: white;
-    background-color: #338aff;
+footer {
+    text-align: center;
     padding: 10px 20px;
-    border-radius: 15px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease-in-out;
+    background-color: #1D7874;
+    color: #fff;
+    margin-top: 20px;
+    font-size: 14px;
 }
-
-.acciones-registradas a:hover {
-    background-color: #0056b3;
-}
-
-
-  

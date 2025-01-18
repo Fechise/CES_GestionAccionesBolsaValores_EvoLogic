@@ -10,16 +10,17 @@
 
 <body>
 <header class="header">
-    <img src="../static/img/LogoStockTracker_SF_SL.png" alt="">
+    <div class="logo">
+        <img src="../static/img/LogoStockTracker_SF_SL.png" alt="Logo Stock Tracker">
+    </div>
     <div class="titulo">
-        <h1>Hola, {{ username }}</h1>
+        <h1> Bienvenido {{ username }} !</h1>
     </div>
     <div class="cerrar-sesion">
         <a href="/logout">Cerrar Sesión</a>
     </div>
 </header>
 <main class="main">
-    <!-- Sección para registrar compras -->
     <div class="registro-compra">
         <h2>Registrar Compra</h2>
         <form action="/comprar" method="POST">
@@ -32,15 +33,14 @@
             <button type="submit" id="registro-compra-button">Registrar</button>
         </form>
     </div>
+
     <div class="acciones-registradas">
-        <!-- Sección para mostrar compras -->
         <h2>Acciones Compradas</h2>
         <table>
             <thead>
             <tr>
                 <th>Símbolo</th>
                 <th>Cantidad</th>
-                <th>Precio de Compra</th>
                 <th>Valor de Compra</th>
                 <th>Fecha</th>
             </tr>
@@ -50,7 +50,6 @@
             <tr>
                 <td>{{ compra.empresa }}</td>
                 <td>{{ compra.cantidad_acciones }}</td>
-                <td>{{ compra.precio_compra }}</td>
                 <td>{{ compra.valor_compra }}</td>
                 <td>{{ compra.fecha_compra.strftime('%Y-%m-%d') }}</td>
             </tr>
@@ -59,52 +58,30 @@
         </table>
         <a href="/compras">Ver detalles</a>
     </div>
+
     <div class="consulta-acciones">
-        <!-- Nueva sección para consultar valores de acciones -->
         <h2>Consultar Valores de Acciones</h2>
         <form id="stock-lookup-form">
             <label for="symbol">Símbolo:</label>
             <input type="text" id="symbol" name="symbol" placeholder="Ejemplo: TSLA" required>
             <button type="submit">Consultar</button>
         </form>
-
-            <!-- Espacio para mostrar los resultados de la consulta -->
-            <div id="stock-data">
-                <h3>Resultados de la Consulta:</h3>
-                <ul id="results"></ul>
-            </div>
+        <div id="stock-data">
+            <h3>Resultados de la Consulta:</h3>
+            <ul id="results"></ul>
         </div>
-        <div id="popup" class="popup">
-            <div class="popup-content">
-                <p>¡Acción registrada con éxito!</p>
-                <button id="btnOk">OK</button>
-            </div>
-        </div>
-        <div class="catalogo-acciones">
-        <h2>Catálogo de Acciones</h2>
-        <button id="load-stocks">Cargar Catálogo</button>
-        <table>
-            <thead>
-            <tr>
-                <th>Símbolo</th>
-                <th>Descripción</th>
-                <th>Moneda</th>
-                <th>Precio Actual</th>
-                <th>Máximo</th>
-                <th>Mínimo</th>
-                <th>Apertura</th>
-                <th>Cambio (%)</th>
-            </tr>
-            </thead>
-            <tbody id="catalogo-body">
-            <!-- Los datos de las acciones se llenarán aquí dinámicamente -->
-            </tbody>
-        </table>
     </div>
-    <div id="loading-indicator" style="display: none;">Loading...</div>
-    </main>
-    <footer>
 
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <p>¡Acción registrada con éxito!</p>
+            <button id="btnOk">OK</button>
+        </div>
+    </div>
+
+</main>
+<footer>
+    <p>&copy; 2025 Stock Tracker</p>
 </footer>
 <script>
     function mostrarPopup() {
@@ -198,5 +175,4 @@
     });
     </script>
 </body>
-
 </html>
