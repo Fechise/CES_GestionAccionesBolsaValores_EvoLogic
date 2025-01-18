@@ -36,7 +36,7 @@ def register():
     if request.method == "POST":
         email = request.form["email"]
         password = request.form["password"]
-        password_confirm = request.form["password-confirm"]
+        password_confirm = request.form["password-confirmacion"]
         name = request.form["name"]
         if email in users:
             return "El usuario ya existe", 400
@@ -114,7 +114,9 @@ def mostrar_compras():
     if "user" not in session:
         return redirect(url_for("login"))
 
-    detalles = []
+    # Diccionario para agrupar las acciones
+    agrupadas = {}
+
     for compra in compras:
         # Llamar a la API para obtener el precio actual
         url = f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={compra['empresa']}&interval=5min&apikey={API_KEY}"
@@ -128,18 +130,39 @@ def mostrar_compras():
         except KeyError:
             precio_actual = 0  # Si hay un error, asignar 0 o manejar como desees
 
-        # Calcular porcentaje de ganancia/pérdida
-        precio_compra = compra["precio_compra"]
+        empresa = compra["empresa"]
+        cantidad_acciones = compra["cantidad_acciones"]
         valor_compra = compra["valor_compra"]
-        porcentaje_ganancia = ((precio_actual - valor_compra) / valor_compra) * 100 if valor_compra > 0 else 0
+        precio_compra = compra["precio_compra"]
+
+        # Si ya existe la empresa en el diccionario, actualizar los datos
+        if empresa in agrupadas:
+            agrupadas[empresa]["cantidad_total"] += cantidad_acciones
+            agrupadas[empresa]["valor_total"] += valor_compra
+        else:
+            # Crear una nueva entrada para la empresa
+            agrupadas[empresa] = {
+                "cantidad_total": cantidad_acciones,
+                "valor_total": valor_compra,
+                "precio_actual": precio_actual,
+                "precio_compra": precio_compra
+            }
+
+    # Calcular detalles finales
+    detalles = []
+    for empresa, datos in agrupadas.items():
+        valor_total = datos["valor_total"]
+        precio_actual = datos["precio_actual"]
+        porcentaje_ganancia = (((precio_actual * datos["cantidad_total"]) - ()) / datos["precio_compra"]) * 100
+        ganancia_perdida = (precio_actual * datos["cantidad_total"]) - valor_total
 
         detalles.append({
-            "empresa": compra["empresa"],
-            "cantidad_acciones": compra["cantidad_acciones"],
-            "precio_actual": precio_actual,
-            "precio_compra": precio_compra,
-            "valor_compra": valor_compra,
-            "porcentaje_ganancia": round(porcentaje_ganancia, 2)
+            "empresa": empresa,
+            "cantidad_total": datos["cantidad_total"],
+            "valor_usd": round(valor_total, 2),
+            "precio_costo": valor_total / datos["cantidad_total"],
+            "porcentaje_ganancia": round(porcentaje_ganancia, 2),
+            "ganancia_perdida": round(ganancia_perdida, 2)
         })
 
     return render_template("compras.html", compras=compras, detalles=detalles)
