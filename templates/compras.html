@@ -16,58 +16,72 @@
     <div class="titulo">
         <h1>Acciones Compradas</h1>
     </div>
-    <div class="regresar">
-        <a href="/">Regresar</a>
-    </div>
 </header>
 <main class="main">
-    <div class="acciones-registradas">
-        <h2>Lista de Acciones Compradas</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Símbolo</th>
-                    <th>Cantidad</th>
-                    <th>Valor de Compra</th>
-                    <th>Fecha de Compra</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for compra in compras %}
-                <tr>
-                    <td>{{ compra.empresa }}</td>
-                    <td>{{ compra.cantidad_acciones }}</td>
-                    <td>${{ compra.valor_compra }}</td>
-                    <td>{{ compra.fecha_compra.strftime('%Y-%m-%d') }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    <div class="acciones-registradas">
-        <h2>Detalles de las Acciones</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Símbolo</th>
-                    <th>Cantidad</th>
-                    <th>Precio Actual</th>
-                    <th>Valor de Compra</th>
-                    <th>Porcentaje de Ganancia/Pérdida</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for detalle in detalles %}
-                <tr>
-                    <td>{{ detalle.empresa }}</td>
-                    <td>{{ detalle.cantidad_acciones }}</td>
-                    <td>${{ detalle.precio_actual }}</td>
-                    <td>${{ detalle.valor_compra }}</td>
-                    <td>{{ detalle.porcentaje_ganancia }}%</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="informacion">
+        <div id="sidebar-menu">
+            <div class="menu-content">
+                <ul>
+                    <li><a href="/">Registrar compra</a></li>
+                    <li><a href="/compras">Ver compras</a></li>
+                    <li><a href="/logout">Cerrar sesión</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="contenido">
+            <div class="acciones-registradas">
+                <h2>Detalle de Acciones Compradas</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fecha de Compra</th>
+                            <th>Acción</th>
+                            <th>Precio de Compra</th>
+                            <th>Cantidad Comprada</th>
+                            <th>USD Compra</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for compra in compras %}
+                        <tr>
+                            <td>{{ compra.fecha_compra.strftime('%Y-%m-%d') }}</td>
+                            <td>{{ compra.empresa }}</td>
+                            <td>${{ compra.valor_compra }}</td>
+                            <td>{{ compra.cantidad_acciones }}</td>
+                            <td>{{ compra.cantidad_acciones * compra.valor_compra }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="acciones-registradas">
+                <h2>Resumen por Acciones</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Acción</th>
+                            <th>Cantidad Total</th>
+                            <th>Valor USD</th>
+                            <th>Precio de Costo</th>
+                            <th>% Ganancia/Pérdida</th>
+                            <th>$ Ganancia/Pérdida</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for detalle in detalles %}
+                        <tr>
+                            <td>{{ detalle.empresa }}</td>
+                            <td>{{ detalle.cantidad_total }}</td>
+                            <td>{{ detalle.valor_usd }}</td>
+                            <td>{{ detalle.precio_costo }}</td>
+                            <td>{{ detalle.porcentaje_ganancia }}%</td>
+                            <td>$ {{ detalle.ganacia_perdida }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </main>
 <footer class="footer">
