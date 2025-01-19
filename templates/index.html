@@ -11,10 +11,13 @@
 <body>
     <header class="header">
         <div class="logo">
-            <img src="../static/img/LogoStockTracker_SF_SL.png" alt="Logo Stock Tracker">
+            <div class="img">
+                <img src="../static/img/LogoStockTracker_SF_SL.png" alt="Logo Stock Tracker">
+            </div>
+            <h1>STOCK TRACKER</h1>
         </div>
         <div class="titulo">
-            <h1> Bienvenido {{ username }} !</h1>
+            <h1> ¡Bienvenido {{ username }}!</h1>
         </div>
     </header>
     <main class="main">
@@ -53,23 +56,27 @@
                 </div>
                 <div class="consulta-acciones-div" id="consulta-acciones-button">?</div>
                 <div class="acciones-registradas">
-                    <h2>Acciones Compradas</h2>
+                    <h2>Resumen por Acciones</h2>
                     <table>
                         <thead>
                             <tr>
-                                <th>Símbolo</th>
-                                <th>Cantidad</th>
-                                <th>Valor de Compra</th>
-                                <th>Fecha</th>
+                                <th>Acción</th>
+                                <th>Cantidad Total</th>
+                                <th>Valor USD</th>
+                                <th>Precio de Costo</th>
+                                <th>% Ganancia/Pérdida</th>
+                                <th>$ Ganancia/Pérdida</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for compra in compras %}
+                            {% for detalle in detalles %}
                             <tr>
-                                <td>{{ compra.empresa }}</td>
-                                <td>{{ compra.cantidad_acciones }}</td>
-                                <td>{{ compra.valor_compra }}</td>
-                                <td>{{ compra.fecha_compra.strftime('%Y-%m-%d') }}</td>
+                                <td>{{ detalle.empresa }}</td>
+                                <td>{{ detalle.cantidad_total }}</td>
+                                <td>{{ detalle.valor_usd }}</td>
+                                <td>{{ detalle.precio_costo }}</td>
+                                <td>{{ detalle.porcentaje_ganancia }}%</td>
+                                <td>$ {{ detalle.ganancia_perdida }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
