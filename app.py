@@ -9,13 +9,73 @@ FINNHUB_API_KEY = 'ct4h7u9r01qo7vqammh0ct4h7u9r01qo7vqammhg'
 
 users = {}
 compras = []
+agrupadas = {}
 
-# Ruta para mostrar la página de inicio
 @app.route("/")
 def index():
-    if "user" in session:
-        return render_template("index.html", compras=compras, user=session["user"], username=session["name"])
-    return redirect(url_for("login"))
+    if "user" not in session:
+        return redirect(url_for("login"))
+
+    # Recalcular el diccionario agrupadas desde cero
+    agrupadas.clear()
+    for compra in compras:
+        empresa = compra["empresa"]
+        cantidad_acciones = compra["cantidad_acciones"]
+        valor_compra = compra["valor_compra"]
+        precio_compra = compra["precio_compra"]
+
+        # Obtener precio actual de la acción desde la API
+        url = f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={empresa}&interval=5min&apikey={API_KEY}"
+        response = requests.get(url)
+        data = response.json()
+
+        try:
+            last_refreshed = list(data["Time Series (5min)"].keys())[0]
+            precio_actual = float(data["Time Series (5min)"][last_refreshed]["4. close"])
+        except KeyError:
+            precio_actual = 0  # Manejar errores asignando un valor por defecto
+
+        # Agregar o actualizar datos en agrupadas
+        if empresa in agrupadas:
+            agrupadas[empresa]["cantidad_total"] += cantidad_acciones
+            agrupadas[empresa]["valor_total"] += valor_compra
+        else:
+            agrupadas[empresa] = {
+                "cantidad_total": cantidad_acciones,
+                "valor_total": valor_compra,
+                "precio_actual": precio_actual,
+                "precio_compra": precio_compra,
+            }
+
+    # Calcular los detalles de las acciones para mostrar en la página
+    detalles = []
+    for empresa, datos in agrupadas.items():
+        valor_total = datos["valor_total"]
+        precio_actual = datos["precio_actual"]
+        cantidad_total = datos["cantidad_total"]
+        precio_costo = valor_total / cantidad_total if cantidad_total > 0 else 0
+
+        # Cálculo del porcentaje de ganancia/pérdida
+        porcentaje_ganancia = 0
+        ganancia_perdida = 0
+
+        if precio_costo > 0:
+            porcentaje_ganancia = ((precio_actual - precio_costo) / precio_costo) * 100
+            ganancia_perdida = (precio_actual * cantidad_total) - valor_total
+
+        detalles.append({
+            "empresa": empresa,
+            "cantidad_total": cantidad_total,
+            "valor_usd": round(valor_total, 2),
+            "precio_costo": round(precio_costo, 2),
+            "porcentaje_ganancia": round(porcentaje_ganancia, 2),
+            "ganancia_perdida": round(ganancia_perdida, 2)
+        })
+
+    # Renderizar la plantilla con los datos necesarios
+    return render_template("index.html", detalles=detalles, compras=compras, username=session["name"])
+
+
 
 # Ruta para la página de login
 @app.route("/login", methods=["GET", "POST"])
@@ -114,9 +174,6 @@ def mostrar_compras():
     if "user" not in session:
         return redirect(url_for("login"))
 
-    # Diccionario para agrupar las acciones
-    agrupadas = {}
-
     for compra in compras:
         # Llamar a la API para obtener el precio actual
         url = f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={compra['empresa']}&interval=5min&apikey={API_KEY}"
@@ -148,24 +205,7 @@ def mostrar_compras():
                 "precio_compra": precio_compra
             }
 
-    # Calcular detalles finales
-    detalles = []
-    for empresa, datos in agrupadas.items():
-        valor_total = datos["valor_total"]
-        precio_actual = datos["precio_actual"]
-        porcentaje_ganancia = (((precio_actual * datos["cantidad_total"]) - ()) / datos["precio_compra"]) * 100
-        ganancia_perdida = (precio_actual * datos["cantidad_total"]) - valor_total
-
-        detalles.append({
-            "empresa": empresa,
-            "cantidad_total": datos["cantidad_total"],
-            "valor_usd": round(valor_total, 2),
-            "precio_costo": valor_total / datos["cantidad_total"],
-            "porcentaje_ganancia": round(porcentaje_ganancia, 2),
-            "ganancia_perdida": round(ganancia_perdida, 2)
-        })
-
-    return render_template("compras.html", compras=compras, detalles=detalles)
+    return render_template("compras.html", compras=compras)
 
 # Ruta para obtener el catálogo de acciones usando Finnhub
 @app.route("/api/stocks", methods=["GET"])
