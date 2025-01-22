@@ -15,7 +15,11 @@ agrupadas = {}
 def index():
     if "user" not in session:
         return redirect(url_for("login"))
+    # Renderizar la plantilla con los datos necesarios
+    return render_template("index.html", username=session["name"])
 
+@app.route("/resumen")
+def resumen():
     # Recalcular el diccionario agrupadas desde cero
     agrupadas.clear()
     for compra in compras:
@@ -73,8 +77,7 @@ def index():
         })
 
     # Renderizar la plantilla con los datos necesarios
-    return render_template("index.html", detalles=detalles, compras=compras, username=session["name"])
-
+    return render_template("resumen.html", detalles=detalles, compras=compras)
 
 
 # Ruta para la página de login
@@ -249,6 +252,36 @@ def obtener_stocks():
 
     except requests.exceptions.RequestException as e:
         return jsonify({"error": str(e)}), 500
+    
+@app.route("/graficos")
+def mostrar_graficos():
+    if "user" not in session:
+        return redirect(url_for("login"))
+
+    # Preparar los datos para los gráficos
+    empresas = []
+    valores_totales = []
+    porcentajes_ganancia = []
+
+    for empresa, datos in agrupadas.items():
+        empresas.append(empresa)
+        valores_totales.append(datos["valor_total"])
+
+        # Calcular porcentaje de ganancia para cada empresa
+        precio_costo = datos["valor_total"] / datos["cantidad_total"] if datos["cantidad_total"] > 0 else 0
+        if precio_costo > 0:
+            porcentaje_ganancia = ((datos["precio_actual"] - precio_costo) / precio_costo) * 100
+        else:
+            porcentaje_ganancia = 0
+        porcentajes_ganancia.append(round(porcentaje_ganancia, 2))
+
+    return render_template(
+        "graficos.html",
+        empresas=empresas,
+        valores_totales=valores_totales,
+        porcentajes_ganancia=porcentajes_ganancia,  # Agregar esta variable
+    )
+
 
 # Ruta para logout
 @app.route("/logout")
