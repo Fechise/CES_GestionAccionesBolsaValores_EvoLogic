@@ -27,6 +27,8 @@
                     <ul>
                         <li><a href="/">Registrar compra</a></li>
                         <li><a href="/compras">Ver compras</a></li>
+                        <li><a href="/resumen">Ver resumen</a></li>
+                        <li><a href="/graficos">Ver gráficos</a></li>
                         <li><a href="/logout">Cerrar sesión</a></li>
                     </ul>
                 </div>
@@ -55,34 +57,6 @@
                     </form>
                 </div>
                 <div class="consulta-acciones-div" id="consulta-acciones-button">?</div>
-                <div class="acciones-registradas">
-                    <h2>Resumen por Acciones</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Acción</th>
-                                <th>Cantidad Total</th>
-                                <th>Valor USD</th>
-                                <th>Precio de Costo</th>
-                                <th>% Ganancia/Pérdida</th>
-                                <th>$ Ganancia/Pérdida</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for detalle in detalles %}
-                            <tr>
-                                <td>{{ detalle.empresa }}</td>
-                                <td>{{ detalle.cantidad_total }}</td>
-                                <td>{{ detalle.valor_usd }}</td>
-                                <td>{{ detalle.precio_costo }}</td>
-                                <td>{{ detalle.porcentaje_ganancia }}%</td>
-                                <td>$ {{ detalle.ganancia_perdida }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    <a href="/compras">Ver detalles</a>
-                </div>
             </div>
         </div>
         <div class="modal-overlay" id="modal-overlay">

@@ -17,7 +17,7 @@
         <h1>STOCK TRACKER</h1>
     </div>
     <div class="titulo">
-        <h1>Acciones Compradas</h1>
+        <h1>Resumen</h1>
     </div>
 </header>
 <main class="main">
@@ -35,25 +35,27 @@
         </div>
         <div class="contenido">
             <div class="acciones-registradas">
-                <h2>Detalle de Acciones Compradas</h2>
+                <h2>Resumen por Acciones</h2>
                 <table>
                     <thead>
                         <tr>
-                            <th>Fecha de Compra</th>
                             <th>Acción</th>
-                            <th>Precio de Compra</th>
-                            <th>Cantidad Comprada</th>
-                            <th>USD Compra</th>
+                            <th>Cantidad Total</th>
+                            <th>Valor USD</th>
+                            <th>Precio de Costo</th>
+                            <th>% Ganancia/Pérdida</th>
+                            <th>$ Ganancia/Pérdida</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for compra in compras %}
+                        {% for detalle in detalles %}
                         <tr>
-                            <td>{{ compra.fecha_compra.strftime('%Y-%m-%d') }}</td>
-                            <td>{{ compra.empresa }}</td>
-                            <td>${{ compra.valor_compra }}</td>
-                            <td>{{ compra.cantidad_acciones }}</td>
-                            <td>{{ compra.cantidad_acciones * compra.valor_compra }}</td>
+                            <td>{{ detalle.empresa }}</td>
+                            <td>{{ detalle.cantidad_total }}</td>
+                            <td>{{ detalle.valor_usd }}</td>
+                            <td>{{ detalle.precio_costo }}</td>
+                            <td>{{ detalle.porcentaje_ganancia }}%</td>
+                            <td>$ {{ detalle.ganancia_perdida }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
