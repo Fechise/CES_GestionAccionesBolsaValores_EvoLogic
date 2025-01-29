@@ -6,65 +6,144 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compras y Detalles</title>
     <link rel="stylesheet" href="../static/css/compras.css">
+    <style>
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 300px;
+            /* Ancho para mejor legibilidad */
+            max-height: 200px;
+            /* Altura máxima con scroll */
+            overflow-y: auto;
+            /* Scroll cuando hay mucha información */
+            background-color: rgba(0, 0, 0, 0.9);
+            /* Fondo oscuro semi-transparente */
+            color: #fff;
+            text-align: left;
+            border-radius: 8px;
+            padding: 10px;
+            position: fixed;
+            /* Tooltip fuera del flujo de la tabla */
+            z-index: 9999;
+            /* Aseguramos que esté encima de todo */
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+            /* Evita que interfiera con el mouse */
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
 </head>
 
 <body>
-<header class="header">
-    <div class="logo">
-        <div class="img">
-            <img src="../static/img/LogoStockTracker_SF_SL.png" alt="Logo Stock Tracker">
+    <header class="header">
+        <div class="logo">
+            <div class="img">
+                <img src="../static/img/LogoStockTracker_SF_SL.png" alt="Logo Stock Tracker">
+            </div>
+            <h1>STOCK TRACKER</h1>
         </div>
-        <h1>STOCK TRACKER</h1>
-    </div>
-    <div class="titulo">
-        <h1>Acciones Compradas</h1>
-    </div>
-</header>
-<main class="main">
-    <div class="informacion">
-        <div id="sidebar-menu">
-            <div class="menu-content">
-                <ul>
-                    <li><a href="/">Registrar compra</a></li>
-                    <li><a href="/compras">Ver compras</a></li>
-                    <li><a href="/resumen">Ver resumen</a></li>
-                    <li><a href="/graficos">Ver gráficos</a></li>
-                    <li><a href="/logout">Cerrar sesión</a></li>
-                </ul>
+        <div class="titulo">
+            <h1>Acciones Compradas</h1>
+        </div>
+    </header>
+    <main class="main">
+        <div class="informacion">
+            <div id="sidebar-menu">
+                <div class="menu-content">
+                    <ul>
+                        <li><a href="/">Registrar compra</a></li>
+                        <li><a href="/compras">Ver compras</a></li>
+                        <li><a href="/resumen">Ver resumen</a></li>
+                        <li><a href="/graficos">Ver gráficos</a></li>
+                        <li><a href="/logout">Cerrar sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="contenido">
+                <div class="acciones-registradas">
+                    <h2>Detalle de Acciones Compradas</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Fecha de Compra</th>
+                                <th>Acción</th>
+                                <th>Precio de Compra</th>
+                                <th>Cantidad Comprada</th>
+                                <th>USD Compra</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for compra in compras %}
+                            <tr>
+                                <td>{{ compra.fecha_compra.strftime('%Y-%m-%d') }}</td>
+                                <td>
+                                    <div class="tooltip" data-symbol="{{ compra.empresa }}"
+                                        data-tooltip-id="tooltip-{{ compra.empresa }}">
+                                        {{ compra.empresa }}
+                                        <div class="tooltiptext" id="tooltip-{{ compra.empresa }}">
+                                            Cargando información...
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>${{ compra.valor_compra }}</td>
+                                <td>{{ compra.cantidad_acciones }}</td>
+                                <td>{{ compra.cantidad_acciones * compra.valor_compra }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-        <div class="contenido">
-            <div class="acciones-registradas">
-                <h2>Detalle de Acciones Compradas</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Fecha de Compra</th>
-                            <th>Acción</th>
-                            <th>Precio de Compra</th>
-                            <th>Cantidad Comprada</th>
-                            <th>USD Compra</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for compra in compras %}
-                        <tr>
-                            <td>{{ compra.fecha_compra.strftime('%Y-%m-%d') }}</td>
-                            <td>{{ compra.empresa }}</td>
-                            <td>${{ compra.valor_compra }}</td>
-                            <td>{{ compra.cantidad_acciones }}</td>
-                            <td>{{ compra.cantidad_acciones * compra.valor_compra }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</main>
-<footer class="footer">
-    <p>&copy; 2025 Stock Tracker</p>
-</footer>
+    </main>
+    <footer class="footer">
+        <p>&copy; 2025 Stock Tracker</p>
+    </footer>
+    <script>
+        // Función para cargar información de la empresa
+        // Función para cargar información de la empresa
+        function loadCompanyInfo(symbol, tooltipId) {
+            fetch(`/api/company-info?symbol=${symbol}`)
+                .then(response => response.json())
+                .then(data => {
+                    const tooltip = document.getElementById(tooltipId);
+                    if (data.error) {
+                        tooltip.innerHTML = "No se pudo cargar la información.";
+                    } else {
+                        tooltip.innerHTML = `
+                    <strong>Nombre:</strong> ${data.name}<br>
+                    <strong>Sector:</strong> ${data.sector}<br>
+                    <strong>Industria:</strong> ${data.industry}<br>
+                    <strong>Descripción:</strong> ${data.description}
+                `;
+                    }
+                })
+                .catch(error => {
+                    const tooltip = document.getElementById(tooltipId);
+                    tooltip.innerHTML = "Error al cargar la información.";
+                });
+        }
+
+        // Agregar evento para cargar información en tooltips
+        document.querySelectorAll('.tooltip').forEach(tooltip => {
+            const symbol = tooltip.getAttribute('data-symbol').trim();
+            const tooltipId = `tooltip-${symbol}`;
+            tooltip.addEventListener('mouseenter', () => {
+                loadCompanyInfo(symbol, tooltipId);
+            });
+        });
+    </script>
 </body>
 
 </html>
