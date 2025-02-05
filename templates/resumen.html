@@ -68,5 +68,41 @@
     <p>&copy; 2025 Stock Tracker</p>
 </footer>
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    function sortTable(table, columnIndex, ascending) {
+        let tbody = table.querySelector("tbody");
+        let rows = Array.from(tbody.querySelectorAll("tr"));
 
+        rows.sort((rowA, rowB) => {
+            let cellA = rowA.children[columnIndex].textContent.trim();
+            let cellB = rowB.children[columnIndex].textContent.trim();
+            
+            if (!isNaN(parseFloat(cellA)) && !isNaN(parseFloat(cellB))) {
+                return ascending ? parseFloat(cellA) - parseFloat(cellB) : parseFloat(cellB) - parseFloat(cellA);
+            } else {
+                return ascending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+            }
+        });
+
+        tbody.innerHTML = "";
+        rows.forEach(row => tbody.appendChild(row));
+    }
+
+    document.querySelectorAll("table").forEach(table => {
+        let headers = table.querySelectorAll("th");
+        headers.forEach((header, index) => {
+            if (index !== 0) { // Evitar ordenar por fecha directamente
+                header.style.cursor = "pointer";
+                header.addEventListener("click", () => {
+                    let ascending = header.dataset.order !== "asc";
+                    sortTable(table, index, ascending);
+                    header.dataset.order = ascending ? "asc" : "desc";
+                });
+            }
+        });
+    });
+});
+
+</script>
 </html>
