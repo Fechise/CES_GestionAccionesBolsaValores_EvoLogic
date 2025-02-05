@@ -6,4 +6,3 @@
 - Integración de cambios
 - Revisiones
 - Pull y push
-- Pruebas
