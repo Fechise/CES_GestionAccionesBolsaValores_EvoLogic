@@ -9,193 +9,127 @@
 </head>
 
 <body>
-<header class="header">
-    <img src="../static/img/LogoStockTracker_SF_SL.png" alt="">
-    <div class="titulo">
-        <h1>Hola, {{ username }}</h1>
-    </div>
-    <div class="cerrar-sesion">
-        <a href="/logout">Cerrar Sesión</a>
-    </div>
-</header>
-<main class="main">
-    <!-- Sección para registrar compras -->
-    <div class="registro-compra">
-        <h2>Registrar Compra</h2>
-        <form action="/comprar" method="POST">
-            <label for="empresa">Símbolo:</label>
-            <input type="text" id="empresa" name="empresa" placeholder="Ejemplo: AAPL" required>
-            <label for="cantidad">Cantidad:</label>
-            <input type="number" id="cantidad" name="cantidad" min="1" required>
-            <label for="valor-compra">Valor de compra:</label>
-            <input type="number" id="valor-compra" name="valor-compra" min="1" required>
-            <button type="submit" id="registro-compra-button">Registrar</button>
-        </form>
-    </div>
-    <div class="acciones-registradas">
-        <!-- Sección para mostrar compras -->
-        <h2>Acciones Compradas</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Símbolo</th>
-                <th>Cantidad</th>
-                <th>Precio de Compra</th>
-                <th>Valor de Compra</th>
-                <th>Fecha</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for compra in compras %}
-            <tr>
-                <td>{{ compra.empresa }}</td>
-                <td>{{ compra.cantidad_acciones }}</td>
-                <td>{{ compra.precio_compra }}</td>
-                <td>{{ compra.valor_compra }}</td>
-                <td>{{ compra.fecha_compra.strftime('%Y-%m-%d') }}</td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        <a href="/compras">Ver detalles</a>
-    </div>
-    <div class="consulta-acciones">
-        <!-- Nueva sección para consultar valores de acciones -->
-        <h2>Consultar Valores de Acciones</h2>
-        <form id="stock-lookup-form">
-            <label for="symbol">Símbolo:</label>
-            <input type="text" id="symbol" name="symbol" placeholder="Ejemplo: TSLA" required>
-            <button type="submit">Consultar</button>
-        </form>
-
-            <!-- Espacio para mostrar los resultados de la consulta -->
-            <div id="stock-data">
-                <h3>Resultados de la Consulta:</h3>
-                <ul id="results"></ul>
+    <header class="header">
+        <div class="logo">
+            <div class="img">
+                <img src="../static/img/LogoStockTracker_SF_SL.png" alt="Logo Stock Tracker">
+            </div>
+            <h1>STOCK TRACKER</h1>
+        </div>
+        <div class="titulo">
+            <h1> ¡Bienvenido {{ username }}!</h1>
+        </div>
+    </header>
+    <main class="main">
+        <div class="informacion">
+            <div id="sidebar-menu">
+                <div class="menu-content">
+                    <ul>
+                        <li><a href="/">Registrar compra</a></li>
+                        <li><a href="/compras">Ver compras</a></li>
+                        <li><a href="/resumen">Ver resumen</a></li>
+                        <li><a href="/graficos">Ver gráficos</a></li>
+                        <li><a href="/logout">Cerrar sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="contenido">
+                <div class="registro-compra">
+                    <h2>Registrar Compra</h2>
+                    <form action="/comprar" method="POST">
+                        <div class="input-group">
+                            <div class="input-wrapper">
+                                <label for="empresa">Símbolo:</label>
+                                <input type="text" id="empresa" name="empresa" placeholder="Ejemplo: 'AAPL'" required>
+                            </div>
+                            <div class="input-wrapper">
+                                <label for="cantidad">Cantidad:</label>
+                                <input type="number" id="cantidad" name="cantidad" min="1" placeholder="Ejemplo: '3'"
+                                    required>
+                            </div>
+                            <div class="input-wrapper">
+                                <label for="valor-compra">Valor de compra:</label>
+                                <input type="number" id="valor-compra" name="valor-compra" min="1"
+                                    placeholder="Ejemplo: '333'" required>
+                            </div>
+                        </div>
+                        <button type="submit" id="registro-compra-button">Registrar</button>
+                    </form>
+                </div>
+                <div class="consulta-acciones-div" id="consulta-acciones-button">?</div>
             </div>
         </div>
-        <div id="popup" class="popup">
-            <div class="popup-content">
-                <p>¡Acción registrada con éxito!</p>
-                <button id="btnOk">OK</button>
+        <div class="modal-overlay" id="modal-overlay">
+            <div class="modal">
+                <span class="close-modal" id="close-modal">&times;</span>
+                <div class="consulta-acciones">
+                    <h2>Consultar Valores de Acciones</h2>
+                    <form id="stock-lookup-form">
+                        <label for="symbol">Símbolo:</label>
+                        <input type="text" id="symbol" name="symbol" placeholder="Ejemplo: TSLA" required>
+                        <button type="submit">Consultar</button>
+                    </form>
+                    <div id="stock-data">
+                        <h3>Resultados de la Consulta:</h3>
+                        <ul id="results"></ul>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="catalogo-acciones">
-        <h2>Catálogo de Acciones</h2>
-        <button id="load-stocks">Cargar Catálogo</button>
-        <table>
-            <thead>
-            <tr>
-                <th>Símbolo</th>
-                <th>Descripción</th>
-                <th>Moneda</th>
-                <th>Precio Actual</th>
-                <th>Máximo</th>
-                <th>Mínimo</th>
-                <th>Apertura</th>
-                <th>Cambio (%)</th>
-            </tr>
-            </thead>
-            <tbody id="catalogo-body">
-            <!-- Los datos de las acciones se llenarán aquí dinámicamente -->
-            </tbody>
-        </table>
-    </div>
-    <div id="loading-indicator" style="display: none;">Loading...</div>
     </main>
     <footer>
+        <p>&copy; 2025 Stock Tracker</p>
+    </footer>
+    <script>
 
-</footer>
-<script>
-    function mostrarPopup() {
-        const popup = document.getElementById("popup");
-        popup.style.display = "flex";
-    }
+        // Funcionalidad del modal
+        const modalOverlay = document.getElementById('modal-overlay');
+        const consultaAccionesButton = document.getElementById('consulta-acciones-button');
+        const closeModalButton = document.getElementById('close-modal');
 
-    function ocultarPopup() {
-        const popup = document.getElementById("popup");
-        popup.style.display = "none";
-    }
-
-    var boton_registro = document.getElementById('registro-compra-button');
-
-    var boton_ok_popup = document.getElementById('btnOk');
-
-    boton_registro.onclick = mostrarPopup;
-
-    boton_ok_popup.onclick = ocultarPopup;
-
-    // Manejar la consulta de valores de acciones
-    document.getElementById('stock-lookup-form').addEventListener('submit', async function (event) {
-        event.preventDefault();
-
-        const symbol = document.getElementById('symbol').value;
-        const resultsContainer = document.getElementById('results');
-        resultsContainer.innerHTML = ''; // Limpiar resultados anteriores
-
-        try {
-            const response = await fetch(`/api/daily-stock-data?symbol=${symbol}`);
-            const data = await response.json();
-
-            if (response.ok) {
-                data.forEach(entry => {
-                    const li = document.createElement('li');
-                    li.textContent = `Fecha: ${entry.date}, Apertura: ${entry.open}, Máximo: ${entry.high}, Mínimo: ${entry.low}, Cierre: ${entry.close}, Volumen: ${entry.volume}`;
-                    resultsContainer.appendChild(li);
-                });
-            } else {
-                resultsContainer.innerHTML = `<li>Error: ${data.error}</li>`;
-            }
-        } catch (error) {
-            resultsContainer.innerHTML = `<li>Error: No se pudo realizar la consulta. Intenta nuevamente.</li>`;
+        function mostrarAcciones() {
+            modalOverlay.style.display = 'flex';
         }
-    });
 
-        // Manejar la carga de catálogo de acciones
-        document.getElementById('load-stocks').addEventListener('click', async function () {
-        const CATALOGO_BODY = document.getElementById('catalogo-body');
-        const LOADING_INDICATOR = document.getElementById('loading-indicator');
-        CATALOGO_BODY.innerHTML = '';
-        LOADING_INDICATOR.style.display = 'block';
-
-        try {
-            const RESPONSE = await fetch('/api/stocks');
-            const STOCKS = await RESPONSE.json();
-
-            if (RESPONSE.ok) {
-                STOCKS.forEach(stock => {
-                    if (
-                        !stock.current_price &&
-                        !stock.day_high &&
-                        !stock.day_low &&
-                        !stock.open_price &&
-                        !stock.change
-                    ) {
-                        return;
-                    }
-
-                    const ROW = document.createElement('tr');
-                    ROW.innerHTML = `
-                    <td>${stock.symbol}</td>
-                    <td>${stock.description}</td>
-                    <td>${stock.exchange || ''}</td>
-                    <td>${stock.current_price || ''}</td>
-                    <td>${stock.day_high || ''}</td>
-                    <td>${stock.day_low || ''}</td>
-                    <td>${stock.open_price || ''}</td>
-                    <td>${stock.change !== undefined ? stock.change + '%' : '0%'}</td>
-                `;
-                    CATALOGO_BODY.appendChild(ROW);
-                });
-            } else {
-                CATALOGO_BODY.innerHTML = `<tr><td colspan="8">Error loading catalog: ${STOCKS.error}</td></tr>`;
-            }
-        } catch (error) {
-            CATALOGO_BODY.innerHTML = `<tr><td colspan="8">Error: Could not fetch catalog. Please try again.</td></tr>`;
-        } finally {
-            LOADING_INDICATOR.style.display = 'none';
+        function cerrarModal() {
+            modalOverlay.style.display = 'none';
         }
-    });
+
+        consultaAccionesButton.addEventListener('click', mostrarAcciones);
+        closeModalButton.addEventListener('click', cerrarModal);
+
+        // Cerrar modal al hacer clic fuera de él
+        modalOverlay.addEventListener('click', function (event) {
+            if (event.target === modalOverlay) {
+                cerrarModal();
+            }
+        });
+
+        // Manejar la consulta de valores de acciones
+        document.getElementById('stock-lookup-form').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const symbol = document.getElementById('symbol').value;
+            const resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = '';
+
+            try {
+                const response = await fetch(`/api/daily-stock-data?symbol=${symbol}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    data.forEach(entry => {
+                        const li = document.createElement('li');
+                        li.textContent = `Fecha: ${entry.date}, Apertura: ${entry.open}, Máximo: ${entry.high}, Mínimo: ${entry.low}, Cierre: ${entry.close}, Volumen: ${entry.volume}`;
+                        resultsContainer.appendChild(li);
+                    });
+                } else {
+                    resultsContainer.innerHTML = `<li>Error: ${data.error}</li>`;
+                }
+            } catch (error) {
+                resultsContainer.innerHTML = `<li>Error: No se pudo realizar la consulta. Intenta nuevamente.</li>`;
+            }
+        });
     </script>
 </body>
 

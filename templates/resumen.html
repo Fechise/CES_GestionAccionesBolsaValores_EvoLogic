@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compras y Detalles</title>
+    <link rel="stylesheet" href="../static/css/compras.css">
+</head>
+
+<body>
+<header class="header">
+    <div class="logo">
+        <div class="img">
+            <img src="../static/img/LogoStockTracker_SF_SL.png" alt="Logo Stock Tracker">
+        </div>
+        <h1>STOCK TRACKER</h1>
+    </div>
+    <div class="titulo">
+        <h1>Resumen</h1>
+    </div>
+</header>
+<main class="main">
+    <div class="informacion">
+        <div id="sidebar-menu">
+            <div class="menu-content">
+                <ul>
+                    <li><a href="/">Registrar compra</a></li>
+                    <li><a href="/compras">Ver compras</a></li>
+                    <li><a href="/resumen">Ver resumen</a></li>
+                    <li><a href="/graficos">Ver gráficos</a></li>
+                    <li><a href="/logout">Cerrar sesión</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="contenido">
+            <div class="acciones-registradas">
+                <h2>Resumen por Acciones</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Acción</th>
+                            <th>Cantidad Total</th>
+                            <th>Valor USD</th>
+                            <th>Precio de Costo</th>
+                            <th>% Ganancia/Pérdida</th>
+                            <th>$ Ganancia/Pérdida</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for detalle in detalles %}
+                        <tr>
+                            <td>{{ detalle.empresa }}</td>
+                            <td>{{ detalle.cantidad_total }}</td>
+                            <td>{{ detalle.valor_usd }}</td>
+                            <td>{{ detalle.precio_costo }}</td>
+                            <td>{{ detalle.porcentaje_ganancia }}%</td>
+                            <td>$ {{ detalle.ganancia_perdida }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="footer">
+    <p>&copy; 2025 Stock Tracker</p>
+</footer>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    function sortTable(table, columnIndex, ascending) {
+        let tbody = table.querySelector("tbody");
+        let rows = Array.from(tbody.querySelectorAll("tr"));
+
+        rows.sort((rowA, rowB) => {
+            let cellA = rowA.children[columnIndex].textContent.trim();
+            let cellB = rowB.children[columnIndex].textContent.trim();
+            
+            if (!isNaN(parseFloat(cellA)) && !isNaN(parseFloat(cellB))) {
+                return ascending ? parseFloat(cellA) - parseFloat(cellB) : parseFloat(cellB) - parseFloat(cellA);
+            } else {
+                return ascending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+            }
+        });
+
+        tbody.innerHTML = "";
+        rows.forEach(row => tbody.appendChild(row));
+    }
+
+    document.querySelectorAll("table").forEach(table => {
+        let headers = table.querySelectorAll("th");
+        headers.forEach((header, index) => {
+            if (index !== 0) { // Evitar ordenar por fecha directamente
+                header.style.cursor = "pointer";
+                header.addEventListener("click", () => {
+                    let ascending = header.dataset.order !== "asc";
+                    sortTable(table, index, ascending);
+                    header.dataset.order = ascending ? "asc" : "desc";
+                });
+            }
+        });
+    });
+});
+
+</script>
+</html>

@@ -4,316 +4,308 @@
     box-sizing: border-box;
 }
 
-@font-face {
-    font-family: 'Snorkad Regular';
-    src: url("../fonts/Snorkad-Regular.ttf");
-}
-
-.header {
-    height: 150px;
-    display: flex;
-    align-items: center;
-    background-color: #1D7874;
-    position: relative;
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
-}
-
-.header img {
-    width: 200px;
-    height: 100px;
-    margin: 0px 30px;
-}
-
-.header .titulo {
-    font-size: 30px;
-    font-family: 'Snorkad Regular';
-    color: white;
-    text-shadow: -2px -2px 0 #000,
-    2px -2px 0 #000,
-    -2px 2px 0 #000,
-    2px 2px 0 #000;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.header .cerrar-sesion {
-    font-size: 30px;
-    text-shadow: -2px -2px 0 #000,
-    2px -2px 0 #000,
-    -2px 2px 0 #000,
-    2px 2px 0 #000;
-    color: black;
-    margin: 0px 10px;
-    position: absolute;
-    right: 10px;
-}
-
-.header .cerrar-sesion a {
-    text-decoration: none;
-    color: #ffffff;
-}
-
-.main {
-    display: flex;
-    align-items: center;
+html,
+body,
+main {
     height: 100%;
-    background: rgb(34, 193, 195);
-    background: radial-gradient(circle, rgba(34, 193, 195, 1) 0%, rgba(0, 179, 255, 1) 100%);
-    align-content: center;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    background-color: #64d5d0;
+    padding: 15px 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+header .logo {
+    display: flex;
     flex-direction: column;
-
+}
+header .logo .img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.main .registro-compra {
-    display: inline-block;
+header .logo h1 {
+    font-size: 24px;
+    color: #fff;
+    font-family: 'Snorkad Regular', Arial, sans-serif;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+header .logo img {
+    width: 100px;
+    height: auto;
+}
+
+header .titulo {
+    flex-grow: 1;
     text-align: center;
-    border: 1px solid black;
-    margin: 30px 0px 10px 0px;
-    border-radius: 15px;
-    padding: 10px;
-    box-shadow: 10px 10px 10px gray;
-    font-family: 'Courier New', Courier, monospace;
-    background-color: aliceblue;
+    font-size: 24px;
+    color: #fff;
+    font-family: 'Snorkad Regular', Arial, sans-serif;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-.main .registro-compra form {
+.registro-compra {
+    margin-top: 20px;
+    width: 90%;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
 }
 
-.main .registro-compra form input {
+.acciones-registradas {
+    width: 90%;
+    background-color: #ffffff;
     border-radius: 15px;
-    border: 0px;
-    width: 250px;
-    height: 30px;
-    margin-top: 10px;
-}
-
-.main .registro-compra form button {
-    background-color: #1D7874;
-    border-radius: 15px;
-    width: 150px;
-    height: 30px;
-    margin-bottom: 10px;
-    color: white;
-    font-family: 'Courier New', Courier, monospace;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease-in-out;
-}
-
-.main .registro-compra form button:hover {
-    background-color: #0056b3;
-    cursor: pointer;
-}
-
-.main .acciones-registradas {
-    display: inline-block;
-    text-align: center;
-    border: 1px solid black;
-    margin: 10px 0px;
-    border-radius: 15px;
-    padding: 10px;
-    box-shadow: 10px 10px 10px gray;
-    font-family: 'Courier New', Courier, monospace;
-    background-color: aliceblue;
-}
-
-.acciones-registradas h2 {
-    font-family: 'Courier New', Courier, monospace;
-    color: #333;
-    margin-bottom: 15px;
-}
-
-.acciones-registradas table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 15px 0;
-    font-family: 'Courier New', Courier, monospace;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-}
-
-.acciones-registradas table thead {
-    background-color: #1D7874;
-    color: white;
-}
-
-.acciones-registradas table thead th {
-    padding: 10px;
-    text-align: center;
-    border-bottom: 2px solid #ddd;
-}
-
-.acciones-registradas table tbody tr {
-    text-align: center;
-}
-
-.acciones-registradas table tbody tr:nth-child(even) {
-    background-color: #e6f7ff;
-}
-
-.acciones-registradas table tbody tr:hover {
-    background-color: #cceeff;
-    transition: background-color 0.3s ease-in-out;
-}
-
-.acciones-registradas table tbody td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 30px;
 }
 
 .acciones-registradas a {
-    display: inline-block;
-    margin-top: 15px;
-    text-decoration: none;
-    color: white;
+    display: flex;
     background-color: #1D7874;
+    color: #fff;
     padding: 10px 20px;
-    border-radius: 15px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease-in-out;
-}
-
-.acciones-registradas a:hover {
-    background-color: #0056b3;
+    border: none;
+    border-radius: 10px;
     cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    text-decoration: none;
+    justify-content: center;
 }
 
-.main .consulta-acciones {
-    display: inline-block;
+h2 {
+    font-size: 22px;
+    color: #1D7874;
+    margin-bottom: 20px;
     text-align: center;
-    border: 1px solid black;
-    margin: 10px 0px;
-    border-radius: 15px;
+}
+
+.registro-compra form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.registro-compra form input {
     padding: 10px;
-    box-shadow: 10px 10px 10px gray;
-    font-family: 'Courier New', Courier, monospace;
-    background-color: aliceblue;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
 }
 
-.main .consulta-acciones form {
-    padding: 20px;
-}
-
-.main .consulta-acciones form input {
-    border-radius: 15px;
-    border: 0px;
-    width: 250px;
-    height: 30px;
+#registro-compra-button {
+    width: 100%;
+    background-color: #1D7874;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease-in-out;
     margin-top: 10px;
 }
 
-.main .consulta-acciones form button {
+button:hover {
+    background-color: #145c59;
+}
+
+
+a:hover {
+    background-color: #145c59;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table th,
+table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+table thead {
     background-color: #1D7874;
-    width: 150px;
-    height: 30px;
-    margin-bottom: 10px;
+    color: #fff;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tbody tr:hover {
+    background-color: #e6f7ff;
+}
+
+footer {
+    text-align: center;
+    padding: 10px 20px;
+    background-color: #1D7874;
+    color: #fff;
+    font-size: 14px;
+}
+
+.informacion {
+    display: flex;
+    height: 100%;
+}
+
+.contenido {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+}
+
+#sidebar-menu {
+    width: 250px;
+    background-color: #2e9893;
     color: white;
-    font-family: 'Courier New', Courier, monospace;
-    border-radius: 15px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    left: 0;
+}
+
+#sidebar-menu .menu-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#sidebar-menu .menu-content ul li {
+    margin-bottom: 20px;
+}
+
+#sidebar-menu .menu-content ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    padding: 10px 15px;
+    display: block;
+    border-radius: 4px;
     transition: background-color 0.3s ease-in-out;
-
 }
 
-.main .consulta-acciones form button:hover {
-    background-color: #0056b3;
-    cursor: pointer;
+#sidebar-menu .menu-content ul li a:hover {
+    background-color: #145c59;
 }
 
-#results {
-    list-style-type: none;
-    margin: 10px 0px;
-}
-
-.popup {
+.modal-overlay {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: none;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
     justify-content: center;
     align-items: center;
 }
 
-.popup-content {
-    background: white;
+.modal {
+    background-color: white;
     padding: 20px;
-    border-radius: 8px;
-    text-align: center;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
 }
 
-.popup button {
-    margin: 5px;
-    padding: 10px 20px;
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #1D7874;
+}
+
+.consulta-acciones {
+    width: 100%;
+}
+
+.consulta-acciones-div {
+    width: 40px;
+    height: 40px;
+    background-color: #1D7874;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 20px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.consulta-acciones-div:hover {
+    background-color: #145c59;
+}
+
+#stock-lookup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+#stock-lookup-form input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#stock-lookup-form button {
+    background-color: #1D7874;
+    color: white;
+    padding: 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
-button#btnOk {
-    background-color: #4CAF50;
-    color: white;
-}
-
-.main .catalogo-acciones {
-    display: inline-block;
-    text-align: center;
-    border: 1px solid black;
-    margin: 10px 0px;
-    border-radius: 15px;
+#results {
+    max-height: 300px;
+    overflow-y: auto;
     padding: 10px;
-    box-shadow: 10px 10px 10px gray;
-    font-family: 'Courier New', Courier, monospace;
-    background-color: aliceblue;
+    list-style: none;
 }
 
-.catalogo-acciones h2 {
-    font-family: 'Courier New', Courier, monospace;
-    color: #333;
-    margin-bottom: 15px;
-}
-
-.catalogo-acciones table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 15px 0;
-    font-family: 'Courier New', Courier, monospace;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-}
-
-.catalogo-acciones table thead {
-    background-color: #1D7874;
-    color: white;
-}
-
-.catalogo-acciones table thead th {
+#results li {
     padding: 10px;
-    text-align: center;
-    border-bottom: 2px solid #ddd;
-}
-
-#load-stocks {
-    background-color: #1D7874;
-    width: 150px;
-    height: 30px;
-    margin-bottom: 10px;
-    color: white;
-    font-family: 'Courier New', Courier, monospace;
-    border-radius: 15px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease-in-out;
-}
-
-#load-stocks:hover {
-    background-color: #0056b3;
-    cursor: pointer;
+    border-bottom: 1px solid #ddd;
 }
