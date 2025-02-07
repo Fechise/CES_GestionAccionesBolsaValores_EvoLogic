@@ -25,7 +25,8 @@ Este proyecto es una aplicación que permite visualizar acciones y comprar algun
 Nota: Si no se tiene instalado Python, entonces es un paso extra que se debe realizar antes del paso 2.
 2. Instalar los requerimientos en requerimientos.txt. Se puede usar el siguiente comando en la terminal:
 `pip install -r requirements.txt`
-3. Ejecutar el archivo app.py, se puede usar el siguiente comando en la terminal:
+3. Ejecutar el comando `pip install yfinance`
+4. Ejecutar el archivo app.py, se puede usar el siguiente comando en la terminal:
 `python app.py`
 
 ### Especificaciones de las ramas:
